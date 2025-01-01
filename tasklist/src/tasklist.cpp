@@ -43,8 +43,10 @@ int main()
     {
         std::cout << "Enter your choice: " << std::endl;
         std::cout << "a - Add a task" << std::endl;
-        std::cout << "d - Delete a task" << std::endl;
         std::cout << "l - List all tasks" << std::endl;
+        std::cout << "u - Update a tasks" << std::endl;
+        std::cout << "d - Delete a task" << std::endl;
+        std::cout << "c - Complete a task" << std::endl;
         std::cout << "q - Quit" << std::endl;
         std::cout << "Your choice: ";
         std::cin >> userChoice;
@@ -64,7 +66,24 @@ int main()
 
             break;
         }
-        case 'd':
+        case 'l':
+            printTaskList(tasks);
+
+            break;
+        case 'u':{
+            printTaskList(tasks);
+            std::cout << "Enter the index of the task to update: ";
+            int index;
+            std::cin >> index;
+            std::cout << "Enter the new description: ";
+            std::string newDescription;
+            std::cin.ignore();
+            std::getline(std::cin, newDescription);
+            tasks[index] = Task(newDescription, tasks[index].isCompleted());
+            printTaskList(tasks);
+            break;
+        }
+        case 'd': {
             printTaskList(tasks);
             std::cout << "Enter the index of the task to delete: ";
             int index;
@@ -72,10 +91,16 @@ int main()
             tasks.erase(tasks.begin() + index);
             printTaskList(tasks);
             break;
-        case 'l':
+        }
+        case 'c': {
             printTaskList(tasks);
-
+            std::cout << "Enter the index of the task to complete: ";
+            int index;
+            std::cin >> index;
+            tasks[index] = Task(tasks[index].getDescription(), true);
+            printTaskList(tasks);
             break;
+        }
         case 'q':
             std::cout << "Quitting" << std::endl;
             break;
